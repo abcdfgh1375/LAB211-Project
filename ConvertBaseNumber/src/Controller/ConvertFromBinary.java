@@ -8,12 +8,6 @@ public class ConvertFromBinary extends Menu {
 
     Element e = new Element();
 
-    public static void main(String[] args) {
-        ConvertFromBinary convertBin = new ConvertFromBinary();
-        String bin = "111111";
-        System.out.println(convertBin.BinaryToHexa(bin));
-    }
-
     public ConvertFromBinary() {
         super("\nConvert Binary Management", Arrays.asList(new String[]{"Input binary number", "Convert to decimal", "Convert to hexa", "Exit"}));
     }
