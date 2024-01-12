@@ -18,7 +18,13 @@ public class CandidatesViewManagement extends Menu{
        super("\nCANDIDATE MANAGEMENT SYSTEM", Arrays.asList(new String[]{"Experience","Fresher",
            "Internship","Searching","Exit"}));
     }
-    
+
+    public void displayAllCandidatesListName(){
+            viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
+            viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
+            viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
+            System.out.println();
+    }
     @Override
     public void execute(int choice) {
     switch(choice){
@@ -29,11 +35,8 @@ public class CandidatesViewManagement extends Menu{
             controller.addCandidate(expList, exp);
             continueChoice = inputter.inputPattern("Do you want to continue? Y/N", "[YN]");
             }while(continueChoice.equalsIgnoreCase("Y"));
+            displayAllCandidatesListName();
             
-            viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
-            viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
-            viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
-             System.out.println();
             break;
         case 2:
             Fresher fresher = new Fresher();
@@ -42,11 +45,7 @@ public class CandidatesViewManagement extends Menu{
             controller.addCandidate(fresherList, fresher);
             continueChoice = inputter.inputPattern("Do you want to continue? Y/N", "[YN]");
             }while(continueChoice.equalsIgnoreCase("Y"));
-            
-            viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
-            viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
-            viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
-            System.out.println();
+            displayAllCandidatesListName();
             break;
         case 3:
             Intern intern = new Intern();
@@ -55,12 +54,7 @@ public class CandidatesViewManagement extends Menu{
             controller.addCandidate(internList, intern);
             continueChoice = inputter.inputPattern("Do you want to continue? Y/N", "[YN]");
             }while(continueChoice.equalsIgnoreCase("Y"));
-            
-            viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
-            viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
-            viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
-             System.out.println();
-            
+             displayAllCandidatesListName();
             break;
         case 4:
             String name = inputter.inputPattern("Input candidate name (First name OR Last name):", "[a-zA-Z\s]+");
