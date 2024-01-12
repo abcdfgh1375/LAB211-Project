@@ -24,8 +24,12 @@ public class CandidatesViewManagement extends Menu{
     switch(choice){
         case 1:
             Experience exp = new Experience();
+            do{
             ViewAllCandidate.createExperienceCandidate(exp);
             controller.addCandidate(expList, exp);
+            continueChoice = inputter.inputPattern("Do you want to continue? Y/N", "[YN]");
+            }while(continueChoice.equalsIgnoreCase("Y"));
+            
             viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
             viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
             viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
@@ -33,8 +37,12 @@ public class CandidatesViewManagement extends Menu{
             break;
         case 2:
             Fresher fresher = new Fresher();
+            do{
             ViewAllCandidate.createFresherCandidate(fresher);
             controller.addCandidate(fresherList, fresher);
+            continueChoice = inputter.inputPattern("Do you want to continue? Y/N", "[YN]");
+            }while(continueChoice.equalsIgnoreCase("Y"));
+            
             viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
             viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
             viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
@@ -42,12 +50,17 @@ public class CandidatesViewManagement extends Menu{
             break;
         case 3:
             Intern intern = new Intern();
+            do{
             ViewAllCandidate.createInternCandidate(intern);
             controller.addCandidate(internList, intern);
+            continueChoice = inputter.inputPattern("Do you want to continue? Y/N", "[YN]");
+            }while(continueChoice.equalsIgnoreCase("Y"));
+            
             viewCandidate.displayCandidatesListName(expList, "EXPERIENCE CANDIDATE");
             viewCandidate.displayCandidatesListName(fresherList, "FRESHER CANDIDATE");
             viewCandidate.displayCandidatesListName(internList, "INTERN CANDIDATE");
              System.out.println();
+            
             break;
         case 4:
             String name = inputter.inputPattern("Input candidate name (First name OR Last name):", "[a-zA-Z\s]+");
