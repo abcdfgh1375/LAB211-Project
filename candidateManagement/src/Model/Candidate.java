@@ -94,7 +94,6 @@ public class Candidate{
             " | " + birthDay.getYear() +
             " | " + address +
             " | " + phone +
-            " | " + email +
-            " | " + candidateType;
+            " | " + email;
 }
 }

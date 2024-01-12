@@ -16,7 +16,9 @@ public class CandidateController{
                  foundCandidates.add(c);
             }
         }
+        if(foundCandidates.isEmpty()){
         System.out.println("There is no candidate with name: " + name + " in the candidate list");
+        }
         return foundCandidates;
     }
 }
