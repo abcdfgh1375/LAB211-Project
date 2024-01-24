@@ -1,83 +1,30 @@
 package Controller;
 
-import Model.Text;
-import Utils.Inputter;
-import View.Menu;
-import java.io.*;
+import View.*;
 import java.util.*;
 
 public class normalizeController extends Menu {
 
-    String inputFile;
-    String outputFile;
-    Inputter input;
-    Text text;
-    StringBuffer content;
+    viewNormalize view;
+    StringBuffer content = new StringBuffer();
 
     public normalizeController() {
-        super("\nNormalize Management", Arrays.asList(new String[]{"Load from file", "Normalize", "Save to file","Display text from file name", "Exit"}));
-        text = new Text();
-        inputFile = text.getInputFile();
-        outputFile = text.getOutputFile();
-        input = new Inputter();
-        content = new StringBuffer();
+        super("\nNormalize Management", Arrays.asList(new String[]{"Load from file", "Normalize", "Save to file", "Display text from file name", "Exit"}));
+
     }
 
-    public void loadFromFile(String fileName) throws Exception {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-            String line;
-            while ((line = br.readLine()) != null) {
-                content.append(line);
-                text.setText(content);
-            }
-            if (content.length() == 0) {
-                System.out.println("File is empty");
-                return;
-            }
-            System.out.println("Load from file successfulled!");
-            br.close();
-        } catch (FileNotFoundException nfe) {
-            System.out.println("File not found " + fileName);
-        } catch (IOException ex) {
-            System.out.println("An error occurred while reading the file");
-        }
-    }
-
- public void displayText() {
-        if (text != null) {
-            System.out.println(text.toString());
-        } else {
-            System.out.println("Text is null");
-        }
-    }
-
-    public void saveToFile( String fileName) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, false))) {
-            bw.write(content.toString());
-            System.out.println("Save into file completed!");
-        } catch (IOException ex) {
-            System.out.println("Error writing to file: " + fileName);
-        }
-    }
-
-       public StringBuffer normalizeContent() {
-        StringBuffer normalizedContent = normalizeContent(content);
-        return normalizedContent;
-    }
-
-    private StringBuffer normalizeContent(StringBuffer content) {
+    public StringBuffer normalizeContent(StringBuffer content) {
         StringBuffer normalizedContent = new StringBuffer();
         String[] lines = content.toString().split(System.lineSeparator());
 
         for (String line : lines) {
             // Normalize each line
-            line = OneSpace(line);
-            line = SpecialCharacter(line);
+            line = oneSpace(line);
+            line = specialCharacter(line);
             line = afterDot(line);
             line = noSpaceQuotes(line);
             line = firstUppercase(line);
-            line = AddDotEnd(line);
+            line = addDotEnd(line);
 
             if (!isLineEmpty(line)) {
                 normalizedContent.append(line).append(System.lineSeparator());
@@ -98,18 +45,73 @@ public class normalizeController extends Menu {
         return bf.toString().trim().substring(0, bf.length() - 3);
     }
 
-    // chỉ có 1 khoảng trắng giữa các từ và các từ viết thg
-    public String OneSpace(String line) {
+    public String fformatOneSpaceQuote(String line) {
+        int count = 0;
+        for (char c : line.toCharArray()) {
+            if (c == '"' && count % 2 == 0) {
+                count++;
+                continue;
+            }
+            if (c == '"' && count % 2 != 0) {
+                if (line.indexOf(c + 1) == '.') {
+                    continue;
+                } else if (line.indexOf(c + 1) == ' ') {
+                    line.replace((char) (c + 1), '.');
+                } else if (Character.isAlphabetic(c + 1) || Character.isDigit(c + 1)) {
+                    String newLine = line.substring(line.indexOf(0), line.indexOf(c)).concat(" ");
+                    newLine.concat(line);
+                }
+            }
+        }
+        return line;
+    }
+
+    public String formatOneSpaceQuote(String line) {
+        StringBuilder result = new StringBuilder();
+        int count = 0;
+
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+
+            if (c == '"' && count % 2 == 0) {
+                count++;
+                result.append(c);
+                continue;
+            }
+
+            if (c == '"' && count % 2 != 0) {
+                if (i + 1 < line.length() && line.charAt(i + 1) == '.') {
+                    result.append(c).append('.');
+                } else if (i + 2 < line.length() && line.charAt(i + 1) == ' ' && line.charAt(i + 2) == '.') {
+                    result.append(c).append('.');
+                    result.deleteCharAt(i + 2);
+                }
+                 else if (i + 1 < line.length() && (Character.isAlphabetic(line.charAt(i + 1)) || Character.isDigit(line.charAt(i + 1)))) {
+                result.append(c).append(" ");
+            } else {
+                result.append(c);
+            }
+        }else {
+            result.append(c);
+        }
+    }
+
+    return result.toString ();
+}
+
+// chỉ có 1 khoảng trắng giữa các từ và các từ viết thg
+public String oneSpace(String line) {
         line = line.toLowerCase();
         line = line.replaceAll("\\s+", " ");
         line = formatOneSpace(line, ".");
         line = formatOneSpace(line, ",");
         line = formatOneSpace(line, ":");
+        line = formatOneSpaceQuote(line);
         return line.trim();
     }
 
     // chỉ có space sau dấu , và dấu . và dấu : 
-    public String SpecialCharacter(String line) {
+    public String specialCharacter(String line) {
         StringBuffer bf = new StringBuffer(line);
         // chạy loop từ đầu tới cuối trc các dấu, sau đó xóa
         for (int i = 0; i < bf.length() - 1; i++) {
@@ -120,7 +122,8 @@ public class normalizeController extends Menu {
         }
         return bf.toString().trim();
     }
-        private String firstUppercase(String line) {
+
+    private String firstUppercase(String line) {
         StringBuffer bf = new StringBuffer(line.trim());
         for (int i = 0; i < line.length(); i++) {
             if (Character.isLetter(line.charAt(i))) {
@@ -129,8 +132,8 @@ public class normalizeController extends Menu {
             }
         }
         return bf.toString().trim();
-        }
-        
+    }
+
     // Sau dấu chấm phải ghi hoa kí tự đầu tiên
     public String afterDot(String line) {
         StringBuffer bf = new StringBuffer(line);
@@ -141,41 +144,41 @@ public class normalizeController extends Menu {
         }
         return bf.toString().trim();
     }
-    
+
     //no spaces before and after sentence or word phrases in quotes (“”).
     public String noSpaceQuotes(String line) {
-    StringBuffer bf = new StringBuffer(line);
-    int countQuotes = 0;
-    int i = 0;
+        StringBuffer bf = new StringBuffer(line);
+        int countQuotes = 0;
+        int i = 0;
 
-    while (i < bf.length()) {
-        if (bf.charAt(i) == '"') {
-            if (countQuotes % 2 == 0) {
-                if (i + 1 < bf.length()&& bf.charAt(i+1)==' ') {
-                    bf.deleteCharAt(i + 1);
+        while (i < bf.length()) {
+            if (bf.charAt(i) == '"') {
+                if (countQuotes % 2 == 0) {
+                    if (i + 1 < bf.length() && bf.charAt(i + 1) == ' ') {
+                        bf.deleteCharAt(i + 1);
+                    }
+                    countQuotes++;
+                } else {
+                    if (i - 1 >= 0 && bf.charAt(i - 1) == ' ') {
+                        bf.deleteCharAt(i - 1);
+                    }
+                    countQuotes = 0;
                 }
-                countQuotes++;
-            } else {
-                if (i - 1 >= 0 && bf.charAt(i-1)==' ') {
-                    bf.deleteCharAt(i - 1);
-                }
-                countQuotes = 0;
             }
+            i++;
         }
-        i++;
+        return bf.toString().trim();
     }
-    return bf.toString().trim();
-}
 
+    public String addDotEnd(String line) {
+        line = line.trim();
 
-   public String AddDotEnd(String line) {
-        if (line.trim().endsWith(".")) {
+        if (line.endsWith(".")) {
             return line;
         } else {
-            return line.concat(".");
+            return line + ".";
         }
     }
-
 
     //There are no blank line between lines
     public boolean isLineEmpty(String line) {
@@ -185,45 +188,22 @@ public class normalizeController extends Menu {
             return false;
         }
     }
-    
+
     @Override
-    public void execute(int choice) {
+public void execute(int choice) {
+        view = new viewNormalize();
         switch (choice) {
             case 1:
-                System.out.println(inputFile);
-            {
-                try {
-                    loadFromFile(inputFile);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-                System.out.println(content.toString());
+                content = view.executeLoad(content);
                 break;
             case 2:
-                content = normalizeContent();
-                System.out.println(content.toString());
+                content = view.executeNormalize(content);
                 break;
             case 3:
-            {
-                try {
-                    saveToFile(outputFile);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
+                view.executeSave(content);
                 break;
             case 4:
-                content = new StringBuffer();
-                String file = input.inputPattern("Input file name: ", "[a-zA-Z.]+");
-            {
-                try {
-                    loadFromFile(file);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-                displayText();
+                view.executeDisplay(content);
                 break;
             case 5:
                 System.exit(0);
@@ -231,6 +211,5 @@ public class normalizeController extends Menu {
                 System.err.println("Invalid choice!");
         }
     }
-
 
 }

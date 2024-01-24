@@ -1,3 +1,4 @@
 
-" abcd" " sdgg " "sa".
+" abcd" " sdgg " "sa"    .
 As you can see Ff "sa"
+as it turns out,   these buffers are  rarely needed , so we may change the implementation at some point to speed up the common case for small strings even further

@@ -1,1 +1,1 @@
-"Abcd" "sdgg" "sa". As you can see ff "sa".
+"Abcd" "sdgg" "sa". As you can see ff "sa"as it turns out, these buffers are rarely needed, so we may change the implementation at some point to speed up the common case for small strings even further.
