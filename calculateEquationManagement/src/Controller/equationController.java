@@ -106,11 +106,11 @@ public class equationController<T> extends Menu {
     }
 
     //function 3: find solution for quadraic equation
-    public void findSolutionQuadaricEquation(HashMap<Character, Float> coefficients) {//--mainFT2
+    public void findSolutionQuadaricEquation(HashMap<Character, Float> coefficients) {
         displaySolution(calSolutionQuadaricEquation(coefficients));
     }
 
-    public HashMap<String, Float> calSolutionQuadaricEquation(HashMap<Character, Float> coefficients) {
+    public HashMap<String, Float> calSolutionQuadaricEquation(HashMap<Character, Float> coefficients) {//--mainFT3
         HashMap<String, Float> solution = new HashMap<>();
         float delta = (float) (Math.pow(coefficients.get('B'), 2) - (4 * coefficients.get('A') * coefficients.get('C')));
         if (delta == 0) {
@@ -157,9 +157,10 @@ public class equationController<T> extends Menu {
     }
 
     private ArrayList<T> takePerfectSquareList(ArrayList<Float> list) {
+        checkTypeNum check = new checkTypeNum();  
         ArrayList<Float> listSquare = new ArrayList();
         for (int k = 0; k < list.size(); k++) {
-            if (checkPerfectSquareNum(list.get(k))) {
+            if (check.checkPerfectSquareNum(list.get(k))) {
                 listSquare.add(list.get(k));
             }
         }
@@ -167,9 +168,10 @@ public class equationController<T> extends Menu {
     }
 
     private ArrayList<T> takeOddList(ArrayList<Float> list) {
+        checkTypeNum check = new checkTypeNum();
         ArrayList<Float> listOdd = new ArrayList();
         for (int k = 0; k < list.size(); k++) {
-            if (!checkEvenNum(list.get(k))) {
+            if (!check.checkEvenNum(list.get(k))) {
                 listOdd.add(list.get(k));
             }
         }
@@ -177,9 +179,10 @@ public class equationController<T> extends Menu {
     }
 
     private ArrayList<T> takeEvenList(ArrayList<Float> list) {
+        checkTypeNum check = new checkTypeNum();
         ArrayList<Float> listEven = new ArrayList();
         for (int k = 0; k < list.size(); k++) {
-            if (checkEvenNum(list.get(k))) {
+            if (check.checkEvenNum(list.get(k))) {
                 listEven.add(list.get(k));
             }
         }
@@ -203,7 +206,7 @@ public class equationController<T> extends Menu {
         }
         System.out.println();
     }
-
+    class checkTypeNum{
     private boolean checkPerfectSquareNum(Float num) {
         int sqrt = (int) Math.sqrt(num);
         return (sqrt * sqrt == num);
@@ -216,4 +219,6 @@ public class equationController<T> extends Menu {
             return false;
         }
     }
+    }
+    
 }
