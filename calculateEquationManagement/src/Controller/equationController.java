@@ -5,6 +5,8 @@ import View.Menu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiConsumer;
 
 public class equationController<T> extends Menu {
 
@@ -88,10 +90,10 @@ public class equationController<T> extends Menu {
     }
 
     private void displaySolution(HashMap<String, Float> solution) {
+
         if (solution.values().stream().anyMatch(value -> value == null)) {
             System.out.println("Solution: x = null\nThe equation has no solution.");
-        } 
-/*if (solution.values().stream().allMatch(value -> value == null)) {
+        } /*if (solution.values().stream().allMatch(value -> value == null)) {
     System.out.println("Solution: x = null");
 }*/ else if (solution.size() < 2) {
 //         System.out.println("Solution: " + Arrays.asList(solution));
@@ -100,7 +102,14 @@ public class equationController<T> extends Menu {
             System.out.println("Solution: x1 = x2 = " + String.format("%.2f", solution.get("x1")));
         } else {
             System.out.print("Solution: ");
-            solution.forEach((key, value) -> System.out.print(key + " = " + String.format("%.2f", value) + ", "));
+            AtomicBoolean first = new AtomicBoolean(true);
+            solution.forEach((String key, Float value) -> {
+                if (!first.getAndSet(false)) {
+                    System.out.print(", ");
+                }
+                System.out.print(key + " = " + String.format("%.2f", value));
+            });
+
             System.out.println();
         }
     }
@@ -157,7 +166,7 @@ public class equationController<T> extends Menu {
     }
 
     private ArrayList<T> takePerfectSquareList(ArrayList<Float> list) {
-        checkTypeNum check = new checkTypeNum();  
+        checkTypeNum check = new checkTypeNum();
         ArrayList<Float> listSquare = new ArrayList();
         for (int k = 0; k < list.size(); k++) {
             if (check.checkPerfectSquareNum(list.get(k))) {
@@ -190,7 +199,7 @@ public class equationController<T> extends Menu {
     }
 
     private void displayList(String msg, ArrayList<T> arrL) {
-        if(arrL.isEmpty()){
+        if (arrL.isEmpty()) {
             System.out.println("List of " + msg + " is empty!");
             return;
         }
@@ -206,19 +215,21 @@ public class equationController<T> extends Menu {
         }
         System.out.println();
     }
-    class checkTypeNum{
-    private boolean checkPerfectSquareNum(Float num) {
-        int sqrt = (int) Math.sqrt(num);
-        return (sqrt * sqrt == num);
-    }
 
-    private boolean checkEvenNum(Float num) {
-        if (num % 2 == 0) {
-            return true;
-        } else {
-            return false;
+    class checkTypeNum {
+
+        private boolean checkPerfectSquareNum(Float num) {
+            int sqrt = (int) Math.sqrt(num);
+            return (sqrt * sqrt == num);
+        }
+
+        private boolean checkEvenNum(Float num) {
+            if (num % 2 == 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
-    }
-    
+
 }
