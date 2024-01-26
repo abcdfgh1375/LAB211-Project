@@ -1,0 +1,11 @@
+VN|Viet Nam|331212|Nice
+L|Laos|236800|Nice
+Cam|Campuchia|181035|Nice
+TL|Thailand|513120|Nice
+MM|Myanmar|676578|Nice
+ML|Malaysia|330803|Nice
+SGP|Singapore|705|Nice
+IDN|Indonesia|1860360|Nice
+Br|Brunei|5765|Nice
+PP|Philippines|300000|Nice
+TL|Timor-Leste|14874|Nice
