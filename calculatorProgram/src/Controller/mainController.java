@@ -3,8 +3,6 @@ package Controller;
 
 import View.Menu;
 import java.util.Arrays;
-import java.util.stream.Stream;
-
 public class mainController extends Menu {
 
     calculatorController cal;
@@ -15,17 +13,7 @@ public class mainController extends Menu {
         cal = new calculatorController();
         bmi = new bmiController();
     }
-    @Override
-    public void display() {
-        Stream.generate(() -> "=").limit(5).forEach(System.out::print);
-        System.out.print(" "+ this.title + " ");
-        Stream.generate(() -> "=").limit(5).forEach(System.out::print);
-        System.out.println();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println((i + 1) + ". " + list.get(i));
-        }
-//        System.out.println(Stream.generate(() -> "=").limit(70).collect(Collectors.joining()));
-    }
+    
     enum menu{
         NormalCalculator,BMICalculator,Exit;
     }
@@ -47,5 +35,6 @@ public class mainController extends Menu {
             case Exit -> System.exit(0);
         }
     }
+
 
 }

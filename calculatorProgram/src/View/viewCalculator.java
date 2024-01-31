@@ -1,8 +1,6 @@
 package View;
 
-import Controller.calculatorController;
 import Model.BMI;
-import Model.operator;
 import Utils.InputterCal;
 
 public class viewCalculator {
@@ -112,7 +110,7 @@ public class viewCalculator {
         System.out.println("----- " + title + " -----");
     }
 
-    public void display(String msg, double value) {
+    public void displayEle(String msg, double value) {
         System.out.println(msg + String.format("%.2f", value));
     }
 

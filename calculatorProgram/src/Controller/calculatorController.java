@@ -10,10 +10,10 @@ import View.viewCalculator;
 
 public class calculatorController {
 
-    viewCalculator view = new viewCalculator();
 
 //main ACTIVE
     public void runCalculate() throws NullPointerException {
+            viewCalculator view = new viewCalculator();
         operator o = new operator();
         view.viewTitle("Normal Calculator");
         try {
@@ -39,9 +39,9 @@ public class calculatorController {
                         }
                         o.setOperType(oper);
                         calculate(o);
-                        view.display("Memory: ", o.getRes());
+                        view.displayEle("Memory: ", o.getRes());
                     } else {
-                        view.display("Memory: ", o.getA());
+                        view.displayEle("Memory: ", o.getA());
                         o.setOperType(oper);
                         if (o.getOperator() == '/') {
                             o.setB(view.inputDividerB("b"));
@@ -53,7 +53,7 @@ public class calculatorController {
                     firstOpe = false;
                 }
             } while (oper != '=');
-            view.display("Result: ", o.getRes());
+            view.displayEle("Result: ", o.getRes());
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }

@@ -71,7 +71,7 @@ public class contact {
     public void setFirstLastName(String name){
         String[] na = name.split(" ");
         this.lastName = na[0];
-        this.firstName = na[1];
+        this.firstName = na[na.length-1];
     }
     
 }
