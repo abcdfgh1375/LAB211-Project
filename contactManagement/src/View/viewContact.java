@@ -108,16 +108,9 @@ public class viewContact {
     }
 
     public boolean checkValidPhone(String phone) {
-        // Biểu thức chính quy để kiểm tra số điện thoại
         String regex = "^(\\()?\\d{3}(\\))?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(\\s?(x|ext)\\d{1,5})?$";
-
-        // Tạo đối tượng Pattern từ regex
         Pattern pattern = Pattern.compile(regex);
-
-        // Tạo đối tượng Matcher để so khớp với chuỗi đầu vào
         Matcher matcher = pattern.matcher(phone);
-
-        // Kiểm tra xem có khớp hay không
         return matcher.matches();
     }
 
