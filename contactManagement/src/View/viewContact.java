@@ -8,21 +8,23 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
 public class viewContact {
 
-    int count = 1;
-    
-    public viewContact(){
-        
+    int count = 0;
+
+    public viewContact() {
+
     }
+
     //RUN
-        public void runAdd(ArrayList<contact> conList) {
+    public void runAdd(ArrayList<contact> conList) {
         contactController con = new contactController();
         displayTitle("Add a Contact", '-');
         displayResutBoolean(con.addContact(conList, inputContact()), "Add");
     }
-        
-       public void runDisplay(ArrayList<contact> conList) {
+
+    public void runDisplay(ArrayList<contact> conList) {
         contactController con = new contactController();
         if (checkEmpty(conList)) {
             return;
@@ -37,56 +39,60 @@ public class viewContact {
             return;
         }
         displayTitle("Delete a Contact", '-');
-        displayResutBoolean(con.deleteContact(conList, con.searchByID(conList,getIDFromInput())), "Delete");
-    }     
-    
+        displayResutBoolean(con.deleteContact(conList, con.searchByID(conList, getIDFromInput())), "Delete");
+    }
+
     //INPUT   
-      public void runAddContact(ArrayList<contact> contactList) {
-            InputterContact input = new InputterContact();
-            //switch choice cho người dùng chọn load hay input
-            String[] menuAddContact = {"1. Load from file", "2. Input contact"};
-            for(String str : menuAddContact ){
-                System.out.println(str);
-            }
-            int choice = input.inputChoiceHasLimit("Select your choice: ", 1, 2);
-            switch (choice) {
-                case 1 -> loadFromFile(contactList, "contact.txt");
-                case 2 -> {
-                    try {
-                        runAdd(contactList);
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                    }
-            }
+    public void runAddContact(ArrayList<contact> contactList) {
+        InputterContact input = new InputterContact();
+        //switch choice cho người dùng chọn load hay input
+        String[] menuAddContact = {"1. Load from file", "2. Input contact"};
+        for (String str : menuAddContact) {
+            System.out.println(str);
+        }
+        int choice = input.inputChoiceHasLimit("Select your choice: ", 1, 2);
+        switch (choice) {
+            case 1 ->
+                loadFromFile(contactList, "contact.txt");
+            case 2 -> {
+                try {
+                    runAdd(contactList);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         }
-    
+    }
+
     public ArrayList<contact> loadFromFile(ArrayList<contact> contactList, String fileName) throws NumberFormatException {
-    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-        String line;
-        do {
-            line = br.readLine();
-            if (line == null) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String line;
+            if ((line = br.readLine()) == null) {
                 System.out.println("File is empty");
                 return null;
+            } else {
+                do {
+                    System.out.println(line);
+                    String[] linearr = line.split("\\|");
+                    try {
+                        contact a = new contact(automaticID(), linearr[0], linearr[1], linearr[2], linearr[3]);
+                        a.setFirstLastName(a.getName());
+                        contactList.add(a);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error parsing float at line: " + line);
+                    }
+                } while ((line = br.readLine()) != null);
             }
-            String[] linearr = line.split("\\|");
-            try {
-                contact a = new contact(automaticID(), linearr[0], linearr[1], linearr[2], linearr[3]);
-                a.setFirstLastName(a.getName());
-                contactList.add(a);
-            } catch (NumberFormatException e) {
-                System.out.println("Error parsing float at line: " + line);
-            }
-        } while (line != null);
-    } catch (FileNotFoundException nfe) {
-        System.out.println("File not found " + fileName);
-    } catch (IOException ex) {
-        System.out.println("An error occurred while reading the file");
+            br.close();
+        } catch (FileNotFoundException nfe) {
+            System.out.println("File not found " + fileName);
+        } catch (IOException ex) {
+            System.out.println("An error occurred while reading the file");
+        }
+        System.out.println("Load from file successfulled!");
+        return contactList;
     }
-    System.out.println("Load from file successfulled!");
-    return contactList;
-}
 
     public contact inputContact() {
         InputterContact input = new InputterContact();
@@ -101,9 +107,6 @@ public class viewContact {
     }
 
     public int automaticID() {
-//        int temp = count;
-//        count++;
-//        return temp;
         return ++count;
     }
 
