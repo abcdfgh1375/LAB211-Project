@@ -94,6 +94,34 @@ public class viewContact {
         return contactList;
     }
 
+        public ArrayList<contact> loadFromFilee(ArrayList<contact> contactList, String fileName) throws NumberFormatException {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            line = br.readLine();
+            do {
+                if (line == null) {
+                    System.out.println("File is empty");
+                    return null;
+                } else {
+                }
+                String[] linearr = line.split("\\|");
+                try {
+                    contact a = new contact(automaticID(), linearr[0], linearr[1], linearr[2], linearr[3]);
+                    a.setFirstLastName(a.getName());
+                    contactList.add(a);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing float at line: " + line);
+                }
+            } while ((line = br.readLine()) != null);
+        } catch (FileNotFoundException nfe) {
+            System.out.println("File not found " + fileName);
+        } catch (IOException ex) {
+            System.out.println("An error occurred while reading the file");
+        }
+        System.out.println("Load from file successfulled!");
+        return contactList;
+    }
+
     public contact inputContact() {
         InputterContact input = new InputterContact();
         contact con = new contact();
