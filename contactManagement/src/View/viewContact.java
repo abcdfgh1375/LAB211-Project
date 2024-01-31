@@ -101,9 +101,10 @@ public class viewContact {
     }
 
     public int automaticID() {
-        int temp = count;
-        count++;
-        return temp;
+//        int temp = count;
+//        count++;
+//        return temp;
+        return ++count;
     }
 
     public boolean checkValidPhone(String phone) {
