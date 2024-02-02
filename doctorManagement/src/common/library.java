@@ -1,6 +1,5 @@
 package common;
 
-import Utils.validationDoctor;
 import java.util.HashMap;
 import model.doctor;
 

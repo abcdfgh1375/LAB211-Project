@@ -1,16 +1,22 @@
 package Controller;
 
+import common.common;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.Menu;
 import model.doctor;
+import view.viewDoctor;
 
 public class doctorManagement extends Menu {
-    private doctor doctor;
+    private final doctor doctor;    
+    private final common common;
+    private final viewDoctor view;
     public doctorManagement() {
         super("Doctor Management", Arrays.asList(new String[]{"Add Doctor", "Update Doctor", "Delete Doctor", "Search Doctor", "Exit"}));
-        doctor = new doctor();
+        this.view = new viewDoctor();
+        this.common = new common();
+        this.doctor = new doctor();
     }
 
     enum choices {
@@ -47,28 +53,28 @@ public class doctorManagement extends Menu {
         choices ch = convertEnum(choice);
         switch (ch) {
             case Add ->{try {
-                doctor.addDoctor();
-                doctor.displayDoctor();
+                addDoctor();
+                displayDoctor();
             } catch (Exception ex) {
                 Logger.getLogger(doctorManagement.class.getName()).log(Level.SEVERE, null, ex);
             }
             }
             case Update ->{try {
-                doctor.updateDoctor();
-                doctor.displayDoctor();
+                updateDoctor();
+                displayDoctor();
             } catch (Exception ex) {
                 Logger.getLogger(doctorManagement.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
             case Delete ->{try {
-                doctor.deleteDoctor();
-                doctor.displayDoctor();
+                deleteDoctor();
+                displayDoctor();
             } catch (Exception ex) {
                 Logger.getLogger(doctorManagement.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
             case Find ->{try {
-                doctor.searchDoctor();
+                searchDoctor();
             } catch (Exception ex) {
                 Logger.getLogger(doctorManagement.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -78,5 +84,32 @@ public class doctorManagement extends Menu {
             }
         }
 
+    }
+    
+       public void addDoctor() throws Exception {
+        doctor.loadDoctor();
+        view.displayTitle("Add Doctor", '-');       
+        view.displayResultFunction(doctor.addDoctor(), "Add");
+        doctor.saveDoctor();
+    }
+
+    public void updateDoctor() throws Exception {
+        view.displayTitle("Update Doctor", '-');
+        view.displayResultFunction(doctor.updateDoctor(), "Update");
+        doctor.saveDoctor();
+    }
+
+    public void deleteDoctor() throws Exception {
+        view.displayTitle("Delete Doctor", '-');
+        view.displayResultFunction(doctor.deleteDoctor(), "Delete");
+        doctor.saveDoctor();
+    }
+
+    public void searchDoctor() throws Exception {
+        view.displayHash(doctor.searchDoctor(), "Search Doctor", '-');
+    }
+
+    public void displayDoctor() throws Exception {
+        view.displayHash(doctor.displayDoctor(), "Result", '-');
     }
 }
