@@ -1,0 +1,11 @@
+Thanh;Ha
+Nang;2300
+Noi;1000.0
+Phuong;Ha
+Anh;TP.Can
+Tho;2000
+Nghia;Ha
+Noi;1200.0
+Noi;1300.0
+Minh;TP.Da
+Linh;TP.HCM;1900
