@@ -52,14 +52,4 @@ public class Person {
         return String.format("%-10s%-16s%s",name, address,salary);
     }
     
-    public void getPerson() throws Exception{
-        view.displayTitle("Person infor", '-');
-        view.displayFC1(lib.getPerson(input.getStringFromInput("Enter Path: "),input.inputDouble("Enter Money: ")));
-    }
-    public void copy() throws Exception{
-        if(lib.copyWordOneTimes(input.getStringFromInput("Enter Source: "), input.getStringFromInput("Enter Destination: "))){
-            System.out.println("Copy done...");
-        }
-        
-    }
 }

@@ -5,10 +5,12 @@
 package Controller;
 import Model.Person;
 import View.*;
+import common.library;
 import java.util.Arrays;
 public class fileController extends Menu{
        private final Person person;
     private final viewFile view;
+    library lib = new library();
     public fileController() {
         super("File Management", Arrays.asList(new String[]{"Find person infor",
             "Copy Text to new file", "Exit"}));
@@ -45,14 +47,14 @@ public class fileController extends Menu{
         switch (ch) {
             case Get -> {
                 try {
-                    person.getPerson();
+                    getPerson();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
             }
             case Copy -> {
                 try {
-                    person.copy();
+                    copy();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -62,5 +64,16 @@ public class fileController extends Menu{
             }
         }
 
+    }
+    
+        public void getPerson() throws Exception{
+        view.displayTitle("Person infor", '-');
+        view.displayFC1(lib.getPerson(view.getStringFromInput("Enter Path: "),view.inputDouble("Enter Money: ")));
+    }
+    public void copy() throws Exception{
+        if(lib.copyWordOneTimes(view.getStringFromInput("Enter Source: "), view.getStringFromInput("Enter Destination: "))){
+            System.out.println("Copy done...");
+        }
+        
     }
 }

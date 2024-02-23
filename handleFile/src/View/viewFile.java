@@ -6,7 +6,9 @@ package View;
 
 import Model.Person;
 import common.library;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 /**
@@ -15,6 +17,33 @@ import java.util.stream.Stream;
  */
 public class viewFile {
     library lib = new library();
+    
+       public String getStringFromInput(String msg) {
+        Scanner sc = new Scanner(System.in);
+        String s = null;
+        while (s == null || s.isEmpty()) {
+            System.out.print(String.format("%s", msg));
+            s = sc.nextLine();
+        }
+        return s;
+    }
+              public double inputDouble(String msg) {
+        Scanner sc = new Scanner(System.in);
+        double number;
+        while (true) {
+            System.out.print(String.format("%s", msg));
+            try {
+                number = sc.nextDouble();
+                if (number > 0) {
+                    return number;
+                } else {
+                    System.err.println("Please enter the double number > 0 ");
+                }
+            } catch (InputMismatchException | NumberFormatException e) {
+                sc.next();
+            }
+        }
+    }
     
     public void displayFC1(List<Person> stfPersonList) throws Exception {
         try{
