@@ -13,22 +13,6 @@ public class viewShape {
         Rectangle r = getInputRect();
         Circle c = getInputCir();
         Triangle t = getInputTri();
-        
-        displayTitle("Rectangle",'-');
-        System.out.println("Width: "+r.getWidth());
-        System.out.println("Length: "+ r.getLength());
-        
-        r.printResult();
-        displayTitle("Circle",'-');
-        System.out.println("Radius: " + c.getRadius());
-        c.printResult();
-        
-        displayTitle("Triangle",'-');
-        System.out.println("Side A: "+ t.getSideA());
-        System.out.println("Side B: "+ t.getSideB());
-        System.out.println("Side C: "+ t.getSideC());
-        t.printResult();
-        
     }
     
     public Rectangle getInputRect() {
@@ -53,5 +37,23 @@ public class viewShape {
         System.out.print(" " + msg + " ");
         Stream.generate(() -> c).limit(5).forEach(System.out::print);
         System.out.println();
+    }
+    public void displayRec(Rectangle r){        
+        displayTitle("Rectangle",'-');
+        System.out.println("Width: "+r.getWidth());
+        System.out.println("Length: "+ r.getLength());
+        r.printResult();
+    }
+    public void displayTri(Triangle t){
+        displayTitle("Triangle",'-');
+        System.out.println("Side A: "+ t.getSideA());
+        System.out.println("Side B: "+ t.getSideB());
+        System.out.println("Side C: "+ t.getSideC());
+        t.printResult();
+    }
+    public void displayCir(Circle c){
+        displayTitle("Circle",'-');
+        System.out.println("Radius: " + c.getRadius());
+        c.printResult();
     }
 }

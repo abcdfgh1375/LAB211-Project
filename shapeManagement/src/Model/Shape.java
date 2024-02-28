@@ -11,8 +11,8 @@ package Model;
 public abstract class Shape {
 
     public void printResult() {
-        System.out.println("Area: " + getArea());
-        System.out.println("Perimeter: " + getPerimeter());
+        System.out.println(String.format("%s%.2f", "Area: ", getArea()));
+        System.out.println(String.format("%s%.2f", "Perimeter: ",getPerimeter()));
     }
 
     ;
