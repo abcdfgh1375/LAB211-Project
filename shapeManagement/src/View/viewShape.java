@@ -7,13 +7,6 @@ import java.util.stream.Stream;
 public class viewShape {
 
     inputterShape in = new inputterShape();
-
-    public void getInputOutputShape(){
-        displayTitle("Calculator Shape Program",'=');
-        Rectangle r = getInputRect();
-        Circle c = getInputCir();
-        Triangle t = getInputTri();
-    }
     
     public Rectangle getInputRect() {
         Rectangle r = new Rectangle(in.inputDouble("Please input side width of Rectangle: "), 
