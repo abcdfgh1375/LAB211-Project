@@ -19,7 +19,11 @@ public class viewStudent {
     inputterStudent in = new inputterStudent();
 
     //INPUT
-    public List<Student> getStudent(List<Student> a) {
+    public List<Student> getStudent(List<Student> a) throws Exception{
+        if(a.isEmpty()){
+            System.out.println("List is empty!");
+            return null;
+        }
         do {
             System.out.println("Please input student information");
             String name = in.getAlphabelticStringFromInput("Name: ");
@@ -52,7 +56,11 @@ public class viewStudent {
         System.out.println();
     }
 
-    public void displayArrList(String msg, char c, List<Student> l) {
+    public void displayArrList(String msg, char c, List<Student> l) throws Exception {
+        if(l.isEmpty()){
+            System.out.println("List is empty!");
+            return;
+        }
         int i = 1;
         for (Student s : l) {
                 displayTitle(msg + i++, c);
